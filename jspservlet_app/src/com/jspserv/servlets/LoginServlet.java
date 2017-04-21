@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jspserv.model.User;
+import com.jspserv.service.UserService;
+
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,9 +26,12 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		if (name.equals("anand") && password.equals("anand")) {
-			request.getRequestDispatcher("success.jsp").include(request, response);
+			UserService userService = new UserService();
+			User[] users = userService.getUsers();
+			request.setAttribute("users", users);
+			request.getRequestDispatcher("success.jsp").forward(request, response);
 		} else {
-			request.getRequestDispatcher("failure.jsp").include(request, response);
+			request.getRequestDispatcher("failure.jsp").forward(request, response);
 		}
 
 	}

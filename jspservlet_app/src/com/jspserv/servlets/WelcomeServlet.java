@@ -14,7 +14,7 @@ public class WelcomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("welcome tservlet");
-  request.getRequestDispatcher("index.jsp").include(request, response);
+  request.getRequestDispatcher("index.jsp").forward(request, response);
 
 	}
 

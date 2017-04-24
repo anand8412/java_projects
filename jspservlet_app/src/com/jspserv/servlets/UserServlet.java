@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jspserv.dao.IUserDAO;
+import com.jspserv.dao.UserDAO;
 import com.jspserv.model.User;
 import com.jspserv.service.UserService;
 
@@ -21,7 +23,10 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		IUserDAO userDAO = new UserDAO();
 		UserService userService = new UserService();
+		userService.setUserDAO(userDAO);
+		
 		String action = request.getParameter("action");
 		if (action.equals("create")) {
 

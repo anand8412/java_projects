@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jspserv.dao.IUserDAO;
+import com.jspserv.dao.UserDAO;
 import com.jspserv.model.User;
 import com.jspserv.service.UserService;
 
@@ -26,7 +28,9 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		if (name.equals("anand") && password.equals("anand")) {
+			IUserDAO userDAO = new UserDAO();
 			UserService userService = new UserService();
+			userService.setUserDAO(userDAO);
 			User[] users = userService.getUsers();
 			request.setAttribute("users", users);
 			request.getRequestDispatcher("success.jsp").forward(request, response);

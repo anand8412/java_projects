@@ -5,7 +5,7 @@ import com.jspserv.model.User;
 public interface IUserDAO {
 	public void insert(User user);
 
-	public void delete(int userId);
+	public boolean delete(int userId);
 
 	public void update(User user);
 

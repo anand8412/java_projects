@@ -9,14 +9,19 @@ import java.sql.SQLException;
 import com.jspserv.model.User;
 
 public class UserDAO implements IUserDAO {
+	Connection conn= getConnection();
+
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
 
 	@Override
 	public void insert(User user) {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Connection conn = getConnection();
 		try {
-			stmt = conn.prepareStatement("insert into user (firstname,lastname,age,gender,isMarried) values(?,?,?,?,?)");
+			stmt = conn
+					.prepareStatement("insert into user (firstname,lastname,age,gender,isMarried) values(?,?,?,?,?)");
 			stmt.setString(1, user.getFirstname());
 			stmt.setString(2, user.getLastname());
 			stmt.setInt(3, user.getAge());
@@ -49,15 +54,15 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public void delete(int userId) {
-
+	public boolean delete(int userId) {
+		boolean isDeleted = false;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Connection conn = getConnection();
+		
 		try {
 			stmt = conn.prepareStatement("delete from user where userid=?");
 			stmt.setInt(1, userId);
-			stmt.execute();
+			isDeleted = stmt.execute();
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -81,7 +86,7 @@ public class UserDAO implements IUserDAO {
 				stmt = null;
 			}
 		}
-
+		return isDeleted;
 	}
 
 	@Override
@@ -89,7 +94,7 @@ public class UserDAO implements IUserDAO {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Connection conn = getConnection();
+		
 		try {
 			stmt = conn.prepareStatement(
 					"update user set firstname =?,lastname=?,age=?,gender=?,isMarried=? where userid=?");
@@ -131,7 +136,7 @@ public class UserDAO implements IUserDAO {
 		User user = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Connection conn = getConnection();
+		
 		try {
 			stmt = conn.prepareStatement("select * from user where userid=?");
 			stmt.setInt(1, userId);
@@ -177,7 +182,7 @@ public class UserDAO implements IUserDAO {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Connection conn = getConnection();
+		
 		User user = null;
 		int empCount = 0;
 		User[] users = null;
@@ -195,7 +200,7 @@ public class UserDAO implements IUserDAO {
 			conn = getConnection();
 			stmt = conn.prepareStatement("select * from user");
 			rs = stmt.executeQuery();
-			
+
 			int i = 0;
 			while (rs.next()) {
 				user = new User();

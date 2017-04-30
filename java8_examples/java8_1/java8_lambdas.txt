@@ -1,0 +1,459 @@
+1)what is lambda expression?
+ans) lambda expression (anonymous functions without name)are compact code blocks that can be passed arround just like data values to other methods.
+
+1)Were we not passing behaviour in pre java 8 as same as lamda? what is exact difference?
+ans) 
+
+a) Plain implemenation: NO references, No anonymous inner classes, No lambda 
+
+Requirement is Now from a emp colletion we need different type of employees
+so we write different almost duplicate methods with same biolerplate code for each type without even pasing behaviour.
+See java8_examples project in example1 package and in A class.
+
+b) We can pass references which implement interface, No anonymous classes, No lambda.
+Requirement is Now from a emp colletion we need different type of employees
+So we create a single interface and a class for each condition which implements the interface to give behaviour.
+See java8_examples project in example1 package and in B class.
+Lot of classes need to be created for each behaviour.
+
+c) We need not create classes, we can pass behaviour by anonymous inner classes., No lambda
+Requirement is Now from a emp colletion we need different type of employees
+So we create a single interface and pass behaviour using anonymous inner classes.
+See java8_examples project in example1 package and in C class.
+lot of code to create anonymous inner classes. can se elot of duplicate code for different behaviours.
+
+d)Here no classes, no anonymous inner class. simple elegant lambda.
+Requirement is Now from a emp colletion we need different type of employees
+So we create a single interface and pass behaviour using lambdas.
+See java8_examples project in example1 package and in D class. 
+
+
+
+7) Explain syntax of lambda?
+ans)
+a)it contains Input arguments,body and a return
+b)(Input arguments) -> body
+c)left hand side is input , right hand is separator and arrow token is separator.
+Example:
+(Integer i) -> i*i;
+(String a) -> notify(a);
+
+8)examples of lambda?
+ans)
+(String s1,String s2) -> s1 + s2;
+(Integer num) -> num * num;
+Complex:
+(List<Trades> trades) ->{persist(trades);notify();}
+
+9) create a lambda expression for following use case?
+Business requirement: creating a formal greeting for visitors/
+Give a visitor the program should return an output formally greeating the visitor.
+
+Example: input/output
+a) "anand"/"Hello anand"
+b) "Mr Ruthvik anand"/"Hello Mr Ruthvik anand"
+c)""/ "Did you forget something"
+
+ans)
+See java8_examples project in example4 package
+
+
+10)Create a thread using classic style and lambda?
+ans) See java8_examples project in example3 package
+
+
+11)Write sorting using classic and comparable.?
+ans) See java8_examples project in example5 package
+
+
+
+
+12)write an example where you call accepting a Runnable classs?
+ans)
+public void methodAcceptingRunnable(Runnable r){}
+
+Ans::::
+Runnable runnable = () -> System.out.println("Hello lambda");
+
+13)write an example where you call accepting a Callable classs?
+ans)
+public void methodAcceptingRunnable(Callable r){}
+
+Ans::::
+Callable runnable = () -> {return 5;};
+ExecutorService service =  Executors.newSingleThreadExecutor();
+Future<Integer> future = service.submit(runnable);
+	
+	
+this is callable expects a return type.
+
+14)what is explicit and implicit return in lambadas?
+ans) 
+Explicit: 
+Implicit:
+
+
+Implicit:
+a -> {a.toLowerCase()};
+
+Explicit:
+a -> {return a.toLowerCase();};
+
+15) is () parenthesis required for left hand side of lambda expressions?
+ans) No if there is only one parameter but if there is more than 1 parameter then it is required.
+See java8_examples project in example4 package
+
+new CreatingLambdas().testGreeting("anand",  s -> "Hello, " + s);
+
+16) is { } parenthsesis and :return statement" required in right side?
+ans) yes if there are more than 1 statement it is required. In other words Braces and return statements are optional in one-line lambda bodies.
+ This means, that they can be omitted for clarity and conciseness.
+a -> a.toLowerCase(); instead of a -> {return a.toLowerCase();};
+is completely legal.
+Also see:
+See java8_examples project in example4 package
+
+17) java is strongly typed language. SO what is the type of lambda expression?
+ans) Functional interface is type of any lambda expression.
+
+18)how does that even if we dont mention Type in lamda expression code works or in other words what is targetType?
+ans) 
+A lambda expression is an instance of a functional interface. But a lambda expression itself does not contain the information about which
+ functional interface it is implementing; that information is deduced from the context in which it is used. so that is called TargetType.
+
+In the declaration:
+
+Callable<String> c = () -> "done";
+the expression is the lambda expression () -> "done". It is used in an assignment context (it is assigned to c). And the target type of expression
+ is Callable<String> because that's what is expected when you assign anything to c.
+
+
+By using TargetType concept. So we use lambda expression to call inside a method. So that methos will have type. So the Java compiler
+a) ensures that type is a functional interface
+b) and the parameter type and return type inside a single method inside the functional interface matches to lambda expression being passed.
+
+19)what is capturing lambda?
+ans) if lambda expreesion uses local variables or instance variables from enclosing class  method it is called capturing lambda.
+
+20) do we need to make local variables final in enclosing method if we need to use in lambda expression?
+ans) No, but it has to be effectively final, in the sense we must not modify the value. if we modify compiler thorws exception. We cant
+ increment,decrement or change the value of local variable in the lambda expression.
+
+ 
+ 
+ 
+ 
+
+21) do we need to make instance variables final in enclosing method, if we need to use in lambda expression?
+ans) No, and  it may not  be effectively final, in the sense we can  modify the value. 
+if we modify then code is not thread safe and if we concurrency we may get unexpected behaviour. so its good habbit not to modfiy value.
+
+22) lambda scope and enclosing scope method scope have same scope?
+ans) exactly same.
+
+23) when we pass input prarmeter to lambda expression can we use same name as enclosing method parameter name?
+ans) No becuase it is like redecalring same variable again o it wont work.
+
+
+30)how does type interference works in java 8 lambda expression?
+(List<Trade> trades,PriceSkewer priceSkewer)->{
+	//some logic
+	}
+
+	(trades,priceSkewer)->{//logic};
+
+	public interface Pricer{}
+
+ ans) this lambda expression has to passed to some method which takes an functional interface so java compiler always can see the types there.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+29)what are 2 types of interfaces?
+ans) 
+a)functional interfaces
+b)normal interfaces.
+
+30) what is the special about functional interface?
+ans) it has only one method. Its better to annotate with @FunctionalInterface so that no body can enter any other method. otherwise all lambdas will fail.
+
+31)is it mandatory to put add @FunctionalInterface for functional interface
+ans) No. but still its good practice. otherwise so many clients can fail.
+
+32)can we add concrete method implementations to interface?
+ans) YES Default method and static method.
+
+Default method: you need to have prefix called "default" before the method.
+static method: you need to have "static" before the method. 
+
+33) does java support mutiple inheritance of state and behaviour?
+ans) State not allowed still but behaviour is allowed through interfaces.
+
+34) if there is an interface A with default  method callme() and interface B extends A and also add a default method callme() and class c implments both A and B?
+does compiler complain? if not which callme() method will be invoked if called from class c?
+ans) compiler does not complain and callme() method in interface B gets called.
+
+35) do we need abstract classes as we already have interfaces with concrete implmentations.
+ans)
+a) if we want to inherit both state and behaviour then use abstract class or use interfaces.
+
+36) In java  what is the use of inbuilt functional interfaces.Give an example.
+ans)
+
+Lets take  2 cases..
+
+interface Movie{
+	boolean isCLassic (int movieId)
+}
+
+
+interface Person{
+	boolean isEmployee (int empId)
+}
+
+Now in both cases both take an int and give an boolean. Instead of having 2 methods we can have common generic interface lik ebelow
+
+interface Tester<T>{
+	boolean test(T t)
+}
+
+
+Predicate has a method test which evaluates the condition and return true or false.
+
+interfcae Predicate<T>{
+boolean test(T t);	
+	}
+
+37) what are  some famous inbuilt functions?
+ans)
+Object type Functions
+Predicate
+BiPredicate
+Consumer
+BiConsumer
+Supplier
+Function
+BiFunction
+
+Primitive Functions:
+a)IntPredicate
+b)DoublePredicate
+c)LongPredicate
+d)IntConsumer
+e)DoubleConsumer
+f)LongConsumer
+g)IntSupplier
+h)DoubleSupplier
+i)LongSupplier
+j)IntFunction<Employee>
+k)LongFunction<Employee>
+l)DoubleFunction<Employee>
+
+
+
+
+38)what is the new package for new functions>
+ans) java.util.function.*
+
+
+39)Write the defintion of Predicate interface with all its methods?
+
+ans)
+
+Predicate can be used in any place where we need to check a test condition and if it returne true or false. And most of the Streaming API methods expect predicate for their inputs.
+
+@FunctionalInterface
+public interface Predicate<T>{
+	boolean test(T t)
+	default Predicate<T> and (Predicate<? super T> other){
+	//some code
+	}
+	default Predicate<T> negate(){
+	//some code
+	}
+	default Predicate<T> or (Predicate<? super T> other){
+	//some code
+	}
+	static Predicate<T> isEqual (Object targetRef){
+	//some code
+	}
+}
+
+40) how to use predicate to test condition? give an example for all its method?
+ans)
+
+a)
+Predicate<String> i  = (s)-> s.length() > 5;
+System.out.println(i.test("java2s.com "));
+
+returns true.
+
+b)
+Predicate<String> i  = (s)-> s.length() > 5;
+Predicate<String> j  = (s)-> s.length() < 3;
+System.out.println(i.and(j).test("java2s.com "));
+
+returns false;
+
+c)
+Predicate<String> i  = (s)-> s.length() > 5;
+System.out.println(i.negate().test("java2s.com "));
+returns false;
+
+d)
+Predicate<String> i  = (s)-> s.length() > 5;
+Predicate<String> j  = (s)-> s.length() < 3;
+System.out.println(i.or(j).test("java2s.com "));
+
+returns true
+
+e)
+Predicate<String> i  = Predicate.isEqual("asdf");
+System.out.println(i.test("java2s.com "));
+
+
+
+41) write defintiton of consumer interface? Give an example?
+ans) it accepts an input and returns nothing. we can use it for anthing that takes single input and do some operation like save, delete or any such operation. 
+
+defintiton as below.
+@FunctionalInterface
+public interface Consumer<T> {
+	void accept(T t);
+
+	default Consumer<T> andThen(Consumer<? super T> after){
+	//some code
+	}
+}
+
+a)
+Consumer<String> c = (x) -> System.out.println(x.toLowerCase());
+    c.accept("Java2s.com");
+
+    returns java2s.com
+b)
+ Consumer<String> c = (x) -> System.out.println(x.toLowerCase());
+    c.andThen(c).accept("Java2s.com");  
+    returns 
+    java2s.com
+    java2s.com
+
+
+42) what is the use of andThen method in consumerfunctionalinterface?
+ans) if we need to combine 2 Consumers or chain tasks we can use this method.
+
+43) what is SupplierFunctionalInterface? write all it methods. give an example.
+ans) it wont take anything but gives an object back. its defintion as below. and it has just one method.
+
+@FunctionalInterface
+public interface Supplier<T>{
+	T get();
+}
+
+Example:
+a)
+Supplier<String> i  = ()-> "java2s.com";
+System.out.println(i.get());
+
+
+44) Give an supplier interface example, where it return an object.
+
+a)In main method.
+SunPower power = new SunPower();
+SunPower p1 = produce(() -> power);
+
+b)SunPower defintion.
+class SunPower {
+  public SunPower() {
+      System.out.println("Sun Power initialized..");
+  }
+}
+
+c)produce method.
+public static SunPower produce(Supplier<SunPower> supp) {
+        return supp.get();
+    }
+
+RETURNS:
+Sun Power initialized..
+
+
+47)what is Function functional interface? write defintiton and example.
+ans) it takes and input and gives an output. there are 4 methods.
+
+@FunctionalInterface
+public interface Function<T,R>
+
+R apply(T t)
+
+default <V> Function<V,R> compose(Function<? super V,? extends T> before){
+	//some code
+}
+
+default <V> Function<T,V> andThen(Function<? super R,? extends V> after){
+	
+}
+
+static <T> Function<T,T> identity(){
+	//some code
+}
+
+}
+
+
+a) apply method example:
+
+Function<Integer,String> converter = (i)-> Integer.toString(i);
+    System.out.println(converter.apply(3).length());
+    System.out.println(converter.apply(30).length());
+returns 1 and 2 respectively.
+
+b)compose function
+Function compose returns a composed function that first applies the before function to its input, and then applies this function to the result.
+
+Function<Integer, Integer> times2 = e -> e * 2;
+Function<Integer, Integer> squared = e -> e * e; 
+times2.compose(squared).apply(4); 
+Returns  32
+
+c)andThen function
+Function andThen returns a composed function that first applies this function to its input, and then applies the after function to the result.
+Function<Integer, Integer> times2 = e -> e * 2;
+Function<Integer, Integer> squared = e -> e * e; 
+times2.andThen(squared).apply(4); 
+returns 64
+
+d)identity function.
+Function identity returns a function that always returns its input argument.
+Function<Integer,Integer> id = Function.identity();
+System.out.println(id.apply(3));
+Returns 3
+
+44) what is IntPredicate, DoublePredicate, LongPredicate?
+boolean test(int value)
+ans) Since a predicate always take Object type as input, if we pass primitive,
+there might be autoboxing which will have performance issue. SO IntPredicate takes primitive as input and gives boolean.
+Same applies to DoublePredicate and LongPredicate.
+
+45)what is BooleanSupplier,DoubleSupplier,IntSupplier,LongSupplier?
+ans) all returns primtive.
+
+boolean getAsBoolean()
+double getAsDouble()
+int getAsInt()
+long getAsLong()
+
+46)what is DoubleConsumer,IntConsumer,LongConsumer,ObjDoubleConsumer,ObjIntConsumer,ObjLongCOnsumeer?
+ans) first 3 takes just primitves and next 3 takes a object and primtive type and return nothing.
+
+47)what is DoubleFunction,IntFunction and LongFunction?
+ans) takes primitive as input and return an object type.
+
+48)what is bipredicate,biconsumer,bifunctions?
+ans) All take 2 arguments as input. BiPredicate returen false. 
+biconsumer returne Object.bifunctions returns an object.

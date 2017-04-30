@@ -1,0 +1,372 @@
+
+
+
+49) what is the stream api?
+ans) Stream API is to do some actions on collection of data. 
+
+a)Before java 8 we were tellign java how and when to do instead of telling what to do.With streams we just tell what to do.
+ we tell stream in declarative way instead of Imperative way(something that demands attention or action; an unavoidable obligation or requirement; necessity:)
+
+b) old code tough to pararrelize. Stream code easy to parellize.
+
+c)if we need to filter we need to add lot of if/else. its tough to read code.
+
+50)we have list of Trades. how to filter all Trades whose quantity is greater than 1000.
+ans)
+
+Before Java 8:
+List<Trade> largeTrades = new ArrayList<Trade>();
+for(Trade trade:trades){
+	if(trade.getQuantity()>10000){
+	largeTrades.add(trade);
+	}
+return largeTrades;
+}
+
+In Java 8:
+List<Trade> largeTrades = trades.stream().filter(trade->trade.getQuantity()>10000).collect(Collectors.toList());
+
+51)which package is streams?
+ans) a new java.util.stream package.
+
+52) what architeture does stream use?
+ans) Filters and Pipes architecture
+
+DS->Operation1->Operation2->Terminator.
+
+53) how to print all elements in list using stream? and what is terminator operation?
+ans)
+List<Movie> movies = MovieUtil.createMovies();
+movies.stream().forEach(System.out::println);
+forEach is terminator operation. we cant call anything else after that.
+
+54)what is map,distinct,limit,filter functions?
+ans)
+filter is to make take out some elements
+map is to change data in some way or apply something on each of the colelction
+limit is to limit data to some number
+distinct removes duplicate data
+
+55)how to create a empty Stream?
+ans)
+Stream<Movie> moviesEmptyStream = Stream.empty();
+System.out.println("Empty Sream:" + moviesEmptyStream.count());
+
+56)how to create a stream from values or array of String?
+ans)
+a)
+Stream<String> movieNames = Stream.of("Gods Mustbe crazy","Fiddler of day");
+System.out.println(" Sream:" + movieNames.count());
+
+b)String[] names = {"anand","suresh","ruthvi"};
+Stream<String> movieNames = Stream.of(names);
+System.out.println(" Sream:" + movieNames.count());
+
+57)how to create stream from list?
+ans)
+Stream<Movie> movieNames= movieList.stream();
+System.out.println(" Sream:" + movieNames.count());
+
+58) how ot generate infinite streams?
+ans)
+Stream<Double> randomStream = Stream.generate(Math::random);//generate method takes supplier
+randomStream.forEach(System.out::println);
+
+OR
+Stream<Integer> integerStream = Stream.iterate(1,i->i+1);
+randomStream.forEach(System.out::println);
+
+
+59)how to use stream from file?
+ans)
+Stream<String> fileLines = Files.lines(Paths.get("c://anand/anand.txt"));
+fileLines.forEach(System.out::println);
+
+60)given a list of movies how do you just filter classic movies and print only
+their names?
+ans)
+
+movies.stream().filter(Movie::isCLassic).map(Movie::getName).forEach(System.out::println);
+
+61)how to make stream code pararell?
+ans) use parallelStream() method instead of stream() method.
+
+62)how can we make sure the movie collection wont iterate all colection?
+ans) use limit.
+
+63) show with example lazy and eager operations of stream?
+ans)
+
+Below wont execute anything and wont print anything untill any operation is called like print or count..
+movies.stream().filter(m->{System.out.println("Inside lazy operation");
+return m.isClassic()? true: false});
+
+This wil get called.
+
+movies.stream().filter(m->{System.out.println("Inside lazy operation");
+return m.isClassic()? true: false}).count();
+
+output of intermediate operation is always stream and will be lazy.
+output of terminator operations is always gives result or void.
+
+64) streams has any storage? featues of streams?
+ans) No Streams dont have storage. it uses existing storage and it stores inernal iteration iteration storage and streams have infinite data becuase dont have storage data. we can do dynamic computation when oulling out data.
+
+65)how to get streams from primitive?
+ans)
+
+int[] ints = new int[] {2,5,6,7,8};
+IntStream intStream = IntStream.of(ints);
+intStream.forEach(Sytem.out::println);
+
+OR 
+IntStream intStream = IntStream.of(3,4,5,6,7);
+intStream.forEach(Sytem.out::println);
+
+
+Same for DoubleStream.
+
+66)how to get int stream from Integer while piping in collection ?
+ans) trades.stream().maptoInt(Trade::getQuantity).sum();
+
+67)Give an example of filtering? what is the input type of filter method?
+ans)  Filter takes predicate as input.
+List<Employee> employees = EmployeeUtil.createEmployees();
+Stream<Employee> employeeStream = employees.stream().filter(Employee::isExecutive);
+employeeStream.forEach(System.out::println);
+
+68)ordering in filter matters?
+ans) yes definitely. if you mess up order you may get undesired results.
+
+69)can we chain filter method?
+ans) yes definitely we can do it.
+
+70) is filter  method intermediate operation or terminator operation?
+ans) intermediate
+
+71)is mapping method intermediate operation or terminator operation?
+ans) Terminator operation
+
+72)given a set of trades we need to get quantity of each trade. which method we must use?
+ans) map method
+
+73)given collection of movies we need collection of just names. which method we must use?
+ans) map method.
+
+74)what is the type of map method?
+ans) Function
+
+75)Give an example of map method?
+ans) 
+List<Employee> employees = EmployeeUtil.createEmployees();
+Stream<String> employeeStream = employees.stream().map(Employee::getName);
+employeeStream.forEach(System.out::println);
+
+OR if we need employee names in uppercase
+
+List<Employee> employees = EmployeeUtil.createEmployees();
+Stream<String> employeeStream = employees.stream().map(Employee::getName).map(Employee::toUpperCase);
+employeeStream.forEach(System.out::println);
+
+
+76)why is map method used?
+ans)for transformations of data.
+
+77)map is lazy operation or eager operation?
+ans)its lazy operation.
+
+78)why is collect mehtod used?
+and) to take stream of data into different collections like arraylist or set or to a MAP
+
+79)what is the type of collect method?
+instance of COllector (New interface)
+
+80) Give example of collect method?
+
+//convert from stream to list.
+List<Trades> trades = TradeUtil.createTrades();
+List<Trade> tradeCollection = trades.stream().collect(Collectors.toList());
+System.out.println(tradeCollection);
+
+//convert from stream to set.
+List<Trades> trades = TradeUtil.createTrades();
+Set<Trade> tradeCollection = trades.stream().collect(Collectors.toSet());
+System.out.println(tradeCollection);
+
+//convert from stream to map
+List<Trades> trades = TradeUtil.createTrades();
+Map<String,Trade> tradeCollection = trades.stream().collect(Collectors.toMap(Trade::getName,trade->trade)); //map of name:value
+System.out.println(tradeCollection);
+
+81)how to get distinct employee name  from  employee list? is distinct intermediate or terminator operation.
+ans)  distinct() is intermediate operation. but its not a stateless operation.
+
+List<Employee> employees = EmployeeUtil.createEmployees();
+Stream<String> employeeStream = employees.stream().map(Employee::getName).distinct();
+employeeStream.forEach(System.out::println);
+
+82)how to get just first n elements from list?
+ans) use limit method.
+
+List<Employee> employees = EmployeeUtil.createEmployees();
+Stream<String> employeeStream = employees.stream().map(Employee::getName).distinct().limit(3);
+employeeStream.forEach(System.out::println);
+
+83) how to get from 4 to last elments from list?
+ans) 
+
+List<Employee> employees = EmployeeUtil.createEmployees();
+Stream<String> employeeStream = employees.stream().skip(4).map(Employee::getName);
+employeeStream.forEach(System.out::println);
+
+
+84)explain with example findFirst, findAny, anyMatch, allMatch , nonematch?
+ans) these are all short circuit operators. once found chain stops.
+
+a) Optional<Trade> firstTrade = trades.stream().filter(Trade::isBigTrade()).findFirst();
+System.out.println(firstTrade.get());
+
+b) Optional<Trade> firstTrade = trades.stream().filter(Trade::isBigTrade()).findAny();
+System.out.println(firstTrade.get());
+
+85) what is the difference between findany and findfirst?
+ans) both are same when run in non pararell. but if you run parareel findany will abort other threads if it finds data in any of the thread. whereas findFirst will execute all
+threads.
+
+anyMatch,allMatch,nonematch condition is matched and returns boolean
+
+boolean isRotten = trades.stream().filter(Trade::isBigTrade()).anyMatch(t->t.getStatus.equals("Rotten"));
+boolean allMatch = trades.stream().filter(Trade::isBigTrade()).allMatch(t->t.getStatus.equals("Rotten"));
+boolean noneMatch = trades.stream().filter(Trade::isBigTrade()).noneMatch(t->t.getStatus.equals("Rotten"));
+
+86)how to aggreagte from list of values into single value or how to do aggregate?
+ans)
+a) using reduce method taking BinaryOperator(takes 2 operands of same type and return same type)
+All trade instrument in comma seprated String.
+Optional<String> instList = trades.stream().map(Trade::getInstrument).reduce((a,b)->a+","b);
+System.out.println(instList);
+
+
+sum of all quantity 
+Optional<Integer> instList = trades.stream().map(Trade::getInstrument).reduce((a,b)->a+b);
+System.out.println(instList);
+
+
+b) using reduce method taking  intital value and BinaryOperator(takes 2 operands of same type and return same type)  
+
+
+87)what is Optional class? expalin with example?
+ans)
+
+Second one may give nullpointer exception as there is no values. So to avoid it we need to use Optional class ifPresent method
+
+List<Integer> attendees = Arrays.asList(23,45,63,12);
+Optional<Integer> noAteenddes = attendees.stream().reduce(Integer::sum);
+System.out.println(noAteenddes.get());
+
+VS
+
+List<Integer> attendees = Arrays.asList();
+Optional<Integer> noAteenddes = attendees.stream().reduce(Integer::sum);
+
+if(noAteenddes.isPresent())
+System.out.println(noAteenddes.get());
+
+88)exaplin optional with details?
+ans)
+
+a)if you are certain use below. But you may get nullpointer exception if student is null
+Student student = new Student();
+Optional<Student> studentOptional= Optional.of(student);
+System.out.println(studentOptional.get());
+
+if you are not sure use below
+
+Student student = new Student();
+Optional<Student> studentOptional= Optional.ofNullable(student);
+System.out.println(studentOptional.get());
+
+we can also check we can use ifPresent to check if its having value.
+
+b)if/orelse optional
+
+Student student = new Student();
+Student defaultStudent = new Student();
+Optional<Student> studentOptional= Optional.of(student);
+System.out.println(studentOptional.orElse(defaultStudent).get();
+
+
+
+c)if/orelsethrow optional
+
+Student student = new Student();
+Optional<Student> studentOptional= Optional.of(student);
+System.out.println(studentOptional.orElseThrow(Exception::new).get();
+
+d)filter/map
+
+Filter:
+Student student = new Student();
+Optional<Student> studentOptional= Optional.of(student);
+studentOptional.filter(student->student.hasTeacher().ifPresent(System.out::println);
+
+
+Map method:
+Student student = new Student();
+Optional<Student> studentOptional= Optional.of(student);
+studentOptional.map(student->student.getName()).ifPresent(System.out::println);
+
+89)write a streaming code to group employee by department.
+ans)
+List<Employee> employees = EmployeeUtil.createDetailedEmployees();
+Map<String,List<employees>> deptEMployees = employees.stream().collect(Collectors.groupingBy(e->e.getDepartment())); 
+
+where string(key) is department
+
+89)write a streaming code to group employee by department and city
+
+ans)
+List<Employee> employees = EmployeeUtil.createDetailedEmployees();
+Map<String,Map<String, List<employees>>> deptEMployees = employees.stream().collect(Collectors.groupingBy(e->e.getDepartment()),Collectors.groupingBy(e->e.getCity())); 
+
+90)how to partition an employee by executive and non executive?
+ans) 
+it takes predicate and divide list by true and false.
+
+List<Employee> employees = EmployeeUtil.createDetailedEmployees();
+Map<Boolean,List<Employee>> empPartition = employees.stream().collect(Collectors.partitioningBy(Employee:isExecutive); 
+
+91)can we do both partiioning and grouping in same method?
+ans) in same collect method we can do same. its return type will be
+Map<Boolean,Map<String, List<employees>>>
+
+92)you hAVE list of employees , each having list of movies? how to get stream of movies
+ans)
+
+Stream<Movie> movieStream= employees.stream().flatMap(e->e.getMovies().stream());
+
+93)how to get IntStream from 2 to 200? also how to get max.min
+ans) use range or rangeClosed to get inclusive
+IntStream ints = IntStream.range(10,20);
+ints.forEach(System.out::println)
+
+OptionalInt max = ints.max() //gives max number
+OptionalInt min = ints.min() //gives min number
+OptionalDouble avg = ints.avg() //gives avg number
+
+94)how to use threads in java 8?
+ans) 
+It internally used fork/join Splittable
+movies.stream().parallel().filter(Trade::isBigTrade()).peek(t->System.out.println(t.getId()+ " "+ Thread.currentThread().getName());
+
+OR
+
+movies.parallelStream().filter(Trade::isBigTrade()).peek(t->System.out.println(t.getId()+ " "+ Thread.currentThread().getName());
+
+95)do and dont of using parallel?
+ans)
+a) size of data
+b) stateful vs stateless operations	
+c) type of datasource
+
+

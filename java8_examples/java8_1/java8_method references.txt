@@ -1,0 +1,150 @@
+1)can you conevert (trade)->trade.isOpen() to method reference?
+ans) trade::isOpen
+
+2)what is static method reference?
+ans)  MethodReferences:isClassic;
+
+3)what is instance method reference?
+ans)MethodReference mr= new MwthodReferences();
+IMovie m2 = mr::isTop10;
+
+4) what is method references?
+ans) its shorthand for lambda expressions
+
+
+5)suppose we have 
+
+
+interface StringArray{
+	String[] create(int size);
+}
+
+how to write lambda expression using constrctor reference and normal syntax?
+
+ams)
+
+a) StringArray sArry1 = (size)-> new String[size];
+b)StringArray sArry2 = String[]::new;
+
+6) what are different types of methos references. Explain with example.
+
+ans)
+
+Types of Method Reference
+There are four types of method reference, the table below summarizes this.
+
+Type	Example	Syntax
+1. Reference to a static method	ContainingClass::staticMethodName	Class::staticMethodName
+2. Reference to a constructor	ClassName::new	ClassName::new
+3. Reference to an instance method of an arbitrary object of a particular type	ContainingType::methodName	Class::instanceMethodName
+4. Reference to an instance method of a particular object	containingObject::instanceMethodName	object::instanceMethodName
+
+
+
+
+1 . Reference to a Static Method
+ 
+Refer class com.example6.MethodRef_Static in java8_examples project
+As you can see in this code, we made reference to a static method in this class.
+
+ContainingClass::staticMethodName
+Containing class	MethodRef_Static
+staticMethodName	isPrime
+As I mentioned above, Method reference is very similar to Lambda.Lets look at the difference here
+
+Lambda Form	List primeNumbers = MethodRef_Static.testPredicate(numbers, a -> MethodRef_Static.isPrime(a));
+Method Reference	List primeNumbers = MethodRef_Static.testPredicate(numbers, MethodRef_Static::isPrime);
+ 
+ 
+2. Reference To Constructor
+ Refer class com.example6.MethodRef_Construtor in java8_examples project
+This is very similar to reference to to a static method.The difference between the two is,
+ the constructor reference method name is new.
+
+ClassName::new
+ClassName	Integer
+new	new
+Lambda Form	List squaredNumbers = MethodRef_Construtor.findSquareRoot(numbers, x -> new Integer(x));
+Method Reference	List squaredNumbers= MethodRef_Construtor.findSquareRoot(numbers,Integer::new);
+ 
+
+3. Reference To an Instance Method Of An Arbitrary Object Of A Particular Type
+ 
+ Refer class com.example6.MethodRef_ArbitraryInstanceMethod in java8_examples project
+ 
+This mean providing reference to any of the persons object in the List of a particular type which is
+ the Person.So the containing type is persons and the method name is getAge();
+
+ContainingType::methodName
+ContainingType	Person
+methodName	getAge
+Lambda Form	List allAges = MethodRef_ArbitraryInstanceMethod.listAllAges(persons, x -> x.getAge());
+Method Reference	List allAges = MethodRef_ArbitraryInstanceMethod.listAllAges(persons, Person::getAge);
+ 
+
+4. Reference To An Instance Method Of A Particular Object
+
+Refer class com.example6.MethodRef_ParticularInstanceMethod in java8_examples project
+
+Since System.out is an instance of type PrintStream, we then call theprintln method of the instance.
+containingObject::instanceMethodName
+containingObject	System.out
+instanceMethodName	println
+Lambda Form			MethodRef_ParticularInstanceMethod.printNames(names, x -> System.out.println(x));
+Method Reference	MethodRef_ParticularInstanceMethod.printNames(names,System.out::println);
+
+
+7)write a code shows how to use Constructor as method reference for Supplier.
+public class Main {
+  public static void main(String[] args) {
+    System.out.println(maker(Employee::new));
+  }
+
+  private static Employee maker(Supplier<Employee> fx) {
+    return fx.get();
+  }
+}
+
+class Employee {
+  @Override
+  public String toString() {
+    return "A EMPLOYEE";
+  }
+}
+
+RETURNS:
+A EMPLOYEE
+
+8)Write a code shows how to assign user defined function to Supplier with method reference.
+
+public class Main {
+  public static void main(String[] args) {
+    Supplier<Student> studentGenerator = Main::employeeMaker;
+
+    for (int i = 0; i < 10; i++) {
+      System.out.println("#" + i + ": " + studentGenerator.get());
+    }
+  }
+
+  public static Student employeeMaker() {
+    return new Student("A",2);
+  }
+
+}
+
+class Student {
+  public String name;
+  public double gpa;
+
+  Student(String name, double g) {
+    this.name = name;
+    this.gpa = g;
+  }
+
+  @Override
+  public String toString() {
+    return name + ": " + gpa;
+  }
+}
+
+

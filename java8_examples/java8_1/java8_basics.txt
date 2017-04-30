@@ -1,0 +1,21 @@
+1)In short tell main changes/new features in java 8?
+ans)
+a) lambdas - functional style and behaviour parameterisation and immutability. 
+b) Streams API - Stream API is to do some actions on collection of data. tell what to do and not how to do.
+c)With Advances in processing powers(multicores), Manually writing threads was always complex and error prone.
+ So Java 8 has something which will make thing parallel version easily.
+d) interface unlocking: changing interface was always a problem. -- concrete methods(default) and static methods in interface 
+e) New functional interfaces. an interface with just 1 abstract method.
+f) other changes like New date and time api and Scripting support.
+
+2)Name some functional programming?
+ans)  SCALA,Haskell ,Scheme,F#
+
+3) wha tis difference between functional programming and object oriented programming?
+
+a) functional programming has no state where was onjectoriented programming has state.
+They're really two approaches to solving the same problem: managing program state.
+
+Object-oriented programming makes state more manageable by breaking it up and encapsulating it in objects. When the objects are kept small and simple, they can make large programs easier to understand. When small objects are carefully composed into larger objects, very large systems can be made that nonetheless are easy to understand at every level of the heirarchy. The trouble is that it's very easy to write large classes with tons of state, which defeats the purpose.
+
+Functional programming takes an entirely different approach. Instead of making state more manageable, the idea is to remove state altogether. Instead of modifying state, functions in FP are pure: they only depend on their inputs, and they only communicate through their outputs, producing no side effects in between. Instead of thinking of a program as globs of state and functions that act on that state, in FP, a program is a collection of transformations that when composed together convert input to output.

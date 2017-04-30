@@ -1,0 +1,41 @@
+1)what are the some of the things related to default methods in interfaces?
+ans)
+
+a) Java interface default methods will help us extending interfaces without having the fear of breaking implementation classes.
+b) Java interface default methos will bridge down differences between interfaces and abstract classes and only major difference now is Interface still supports multiple inheritance.
+c) Java 8 interface methods will help us in avoiding utility classes such as the collections class method can be provided in the interfaces itself.
+d)java interface default methods will help us in removing base implementation classes , we can provide default implmentation and the implmentation classes can choose which one to override.
+e)one of the major reasons for default methods is to enhance the collections api in java 8 to support lambda expressions.
+f)A default method cannot override a method from java.lang.Object.
+
+2) how does default methods in interface solve diamond problem? i.e if a class implements 2 interfaces with same default method what will happen?
+ans) if a class implements 2 interfaces with same default method, then the class has to override the default method 
+to avoid confusion otherwise compiler throws error.
+See java8_examples project in example2 package
+
+3) if a class implements a interface and extends a class. Both interface and superclass has same method with same method signature. Does class need to overide as in question 2?
+ans) No class will get method from superclass and not from interface.
+
+4)tell some points about static interfaces in java?
+ans)
+a) Java interface static method is part of interface. we cant use it for
+implmentation class objects or in other words we cant override it
+b) They are good for providing utiltiy methods for example null check,collection sorting etc..
+
+
+5) what is difference between interface and abstract class in java 8?
+abs) 
+a) abstract class can have mutable state. where as interface cannot have mutable state. As we might be knowing in interface
+state is by default final, even if we dont mention final.
+b) Abstract class can have construtor where as interface does not have construtor.
+c)There is no difference between abstract class and interface other than above 2 in java 8.
+
+6)what is the purpose of introducing defender methods or default methods in interface in java?
+ans)
+a) If we need to extend the existing interface like list to add methods like stream() or filter(), then we must have
+changed many classes liek arraylist,linked list and its better to add in interface. SO to support backward compatibility,
+thry added defender methods
+b) Suppose if we take functional interface Predicate, it has  1 methods test but we need other methods like negate. But for 
+that usually we need to write separate Util classes. It better o have it in interface rather than separate UTil class.
+c) it will reduce classes like AbstractList which is there to supply implemented mehtods. now we can have in interface itslef.
+
